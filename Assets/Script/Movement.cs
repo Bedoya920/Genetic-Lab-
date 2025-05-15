@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Movement : MonoBehaviour
 {
@@ -9,11 +10,11 @@ public class Movement : MonoBehaviour
     public int[] genoma;
     public int genSize = 100;
     public int genIndex;
+    public bool alive = true; 
 
 
     void Start()
     {
-        RandomGenoma();
         StartCoroutine(RandomMovement());
     }
 
@@ -26,9 +27,17 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            alive = false;
+        }
+    }
+
     IEnumerator RandomMovement()
     {
-        while (true)
+        while (alive)
         {
             if (!isMoving)
             {
