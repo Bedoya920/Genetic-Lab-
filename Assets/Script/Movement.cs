@@ -6,10 +6,24 @@ public class Movement : MonoBehaviour
     private bool isMoving = false;
     private float movementTime = 0.5f; 
     private float timerMove;
+    public int[] genoma;
+    public int genSize = 100;
+    public int genIndex;
+
 
     void Start()
     {
+        RandomGenoma();
         StartCoroutine(RandomMovement());
+    }
+
+    public void RandomGenoma()
+    {
+        genoma = new int[genSize];
+        for (int i = 0; i < genSize; i++)
+        {
+            genoma[i] = Random.Range(0, 4);
+        }
     }
 
     IEnumerator RandomMovement()
@@ -18,7 +32,8 @@ public class Movement : MonoBehaviour
         {
             if (!isMoving)
             {
-                int i = Random.Range(0, 4);
+                int i = genoma[genIndex%genoma.Length];
+                genIndex++;
                 Vector3 actualPos = transform.position;
                 Vector3 nextMove = actualPos;
 
