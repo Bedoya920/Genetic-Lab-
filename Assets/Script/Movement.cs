@@ -5,11 +5,16 @@ using Unity.VisualScripting;
 public class Movement : MonoBehaviour
 {
     private bool isMoving = false;
+
     private float movementTime = 0.5f; 
     private float timerMove;
+
+    [Header("Genoma Options")]
     public int[] genoma;
     public int genSize = 100;
     public int genIndex;
+
+    [Header("Vida")]
     public bool alive = true; 
 
 
@@ -27,6 +32,22 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void CopyGenoma(Movement parent)
+    {
+        genSize = parent.genSize;
+        genoma = new int[genSize];
+        for (int i = 0; i < genSize; i++)
+        {
+            genoma[i] = parent.genoma[i];
+        }
+    }
+
+    public void Mutate()
+    {
+        int index = Random.Range(0, genSize);
+        genoma[index] = Random.Range(0, 4);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -34,6 +55,7 @@ public class Movement : MonoBehaviour
             alive = false;
         }
     }
+
 
     IEnumerator RandomMovement()
     {
