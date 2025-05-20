@@ -48,6 +48,17 @@ public class Movement : MonoBehaviour
         genoma[index] = Random.Range(0, 4);
     }
 
+    public void GiveBirth(Movement p, Movement m)
+    {
+        genSize = p.genSize;
+        genoma = new int[genSize];
+        for (int i = 0; i < genSize; i++)
+        {
+            genoma[i] = (i % 2 == 0) ? p.genoma[i] : m.genoma[i];
+        }
+    }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -55,6 +66,8 @@ public class Movement : MonoBehaviour
             alive = false;
         }
     }
+
+    
 
 
     IEnumerator RandomMovement()

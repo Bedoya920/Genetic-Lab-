@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class PopulationManager : MonoBehaviour
 {
@@ -15,11 +16,12 @@ public class PopulationManager : MonoBehaviour
     [SerializeField]private int evalTime = 20; 
 
     [SerializeField] private List<Movement> GatoPopulation = new List<Movement>();
-
+    [SerializeField] private float timeScale = 1;
     private void Start()
     {
         FirstPeople();
         StartCoroutine(EvalTemp());
+        Time.timeScale = timeScale;
     }
 
     public void FirstPeople()
@@ -37,13 +39,16 @@ public class PopulationManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(evalTime);
-
-            GatoPopulation.Sort((a, b) =>
+            for (int i = 0; i < population; i++)
             {
-                float distA = Vector3.Distance(a.transform.position, target.position);
-                float distB = Vector3.Distance(b.transform.position, target.position);
-                return distA.CompareTo(distB);
-            });
+                GatoPopulation.Sort((a, b) =>
+                {
+                    float distA = -a.transform.position.z + target.position.z; // Vector3.Distance(a.transform.position, target.position);
+                    float distB = -b.transform.position.z + target.position.z;
+                    return distA.CompareTo(distB);
+                });
+            }
+            
 
             int survivors = population / 2;
             List<Movement> oldCats = new List<Movement>();
@@ -53,7 +58,7 @@ public class PopulationManager : MonoBehaviour
             {
                 oldCats.Add(GatoPopulation[i]);
             }
-            //Preguntar por que con GameObject no deja utilizar foreach
+            
             foreach (Movement gato in GatoPopulation)
             {
                 Destroy(gato.gameObject);
@@ -62,7 +67,26 @@ public class PopulationManager : MonoBehaviour
             GatoPopulation.Clear();
 
             //La nueva era
-            for (int i = 0; i < population; i++)
+            for (int i = 0; i < population / 3; i++)
+            {
+                Movement oldCat = oldCats[i % survivors];
+                Movement child = Instantiate(GatoPrefab).GetComponent<Movement>();
+                child.CopyGenoma(oldCat);
+                //child.Mutate();
+                GatoPopulation.Add(child);
+            }
+
+            for (int i = 0; i < population/3; i++)
+            {
+                Movement oldCatM = oldCats[i % survivors];
+                Movement oldCatP = oldCats[(i +1) % survivors];
+                Movement child = Instantiate(GatoPrefab).GetComponent<Movement>();
+                child.GiveBirth(oldCatM, oldCatP);
+                //child.Mutate();
+                GatoPopulation.Add(child);
+            }
+
+            for (int i = 0; i < population / 3; i++)
             {
                 Movement oldCat = oldCats[i % survivors];
                 Movement child = Instantiate(GatoPrefab).GetComponent<Movement>();
@@ -70,6 +94,9 @@ public class PopulationManager : MonoBehaviour
                 child.Mutate();
                 GatoPopulation.Add(child);
             }
+
+
+
 
             print($"Generación {generation} completada.");
             generation++;
