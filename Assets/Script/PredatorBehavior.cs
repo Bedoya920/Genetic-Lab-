@@ -4,14 +4,12 @@ public class PredatorBehavior : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        // asumimos que los gatos tienen tag "Gato"
         if (other.CompareTag("Gato"))
         {
-            var movimiento = other.GetComponent<Movement>();
-            if (movimiento != null)
+            Movement mov = other.GetComponent<Movement>();
+            if (mov != null)
             {
-                movimiento.alive = false;
-                Destroy(other.gameObject);
+                mov.alive = false;
             }
         }
     }
