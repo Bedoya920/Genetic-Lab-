@@ -412,6 +412,10 @@ MonoBehaviour:
   evalTime: 60
   GatoPopulation: []
   timeScale: 5
+  huntStartDelay: 5
+  huntInterval: 1
+  PredatorPrefab: {fileID: 1394306136883929146, guid: 027a379f93153f34f85e70ee128a32f5, type: 3}
+  predatorSpeed: 5
 --- !u!4 &432769315
 Transform:
   m_ObjectHideFlags: 0
@@ -979,6 +983,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 557010892017339681, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
+      propertyPath: m_TagString
+      value: Gato
+      objectReference: {fileID: 0}
+    - target: {fileID: 722201272913067183, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
+      propertyPath: m_TagString
+      value: Gato
+      objectReference: {fileID: 0}
     - target: {fileID: 1801184545557476341, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
       propertyPath: m_Name
       value: Gato
@@ -986,6 +998,14 @@ PrefabInstance:
     - target: {fileID: 1801184545557476341, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801184545557476341, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
+      propertyPath: m_TagString
+      value: Gato
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872613600087300568, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
+      propertyPath: m_TagString
+      value: Gato
       objectReference: {fileID: 0}
     - target: {fileID: 8463723373090089084, guid: aef4e956e7755df48a4dbb663adda8bd, type: 3}
       propertyPath: m_LocalPosition.x
